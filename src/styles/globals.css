@@ -1,0 +1,50 @@
+:root {
+  --black: #000000;
+  --primary-color: #ED145B;
+  --secondary-color: #161616;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-roboto-condensed);
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: var(--secondary-color);
+  overflow-x: hidden;
+}
+
+section {
+  padding: 5rem 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-none {
+  cursor: none;
+}
+
+
+.color-primary {
+  color: var(--primary-color);
+}
+
+.color-secondary {
+  color: var(--secondary-color);
+}
+
+.bg-color-primary {
+  background-color: var(--primary-color);
+}
+
+.bg-color-secondary {
+  background-color: var(--secondary-color);
+}
+
+.error{
+  color: var(--primary-color);
+}
