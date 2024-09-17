@@ -1,8 +1,9 @@
 "use client";
 
-import React from 'react';
+import Cookie from "js-cookie";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { useRouter } from 'next/navigation';
 
 interface LoginFormValues {
 	email: string;
@@ -19,17 +20,33 @@ const validationSchema = Yup.object({
 });
 
 export default function Login() {
+	const router = useRouter()
 
-	const handleSubmit = (values: LoginFormValues, { setSubmitting }: FormikHelpers<LoginFormValues>) => {
+	const handleSubmit = async (values: LoginFormValues, { setSubmitting, resetForm, setStatus  }: FormikHelpers<LoginFormValues>) => {
 
-		console.log('Valores do Formulário:', values);
+		try {
+			const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/auth/login', {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(values),
+			})
 
-		setTimeout(() => {
-			// Simulação de uma requisição para a API
-			setSubmitting(false);
-			alert('Login realizado com sucesso!');
-		}, 1000);
+			const data = await response.json();
 
+			if (!response.ok) {
+				setStatus({ error: 'Erro ao fazer login. Verifique suas credenciais e tente novamente.' });
+				return;
+			}
+
+			Cookie.set('accessToken', data.accessToken, { expires: 1 })
+			router.push('/admin')
+		} catch (err) {
+			resetForm();
+			setStatus({ error: 'Erro ao fazer login. Verifique suas credenciais e tente novamente.' });
+		}
 	};
 
 
@@ -39,12 +56,18 @@ export default function Login() {
 				<div className="row justify-content-center">
 					<div className="col-12 col-md-8 text-center">
 						<h1 className='color-primary'>Login</h1>
+						<pre>
+							admin@email.com
+						</pre>
+						<pre>
+							123456
+						</pre>
 						<Formik
 							initialValues={{ email: '', password: '' }}
 							validationSchema={validationSchema}
 							onSubmit={handleSubmit}
 						>
-							{({ isSubmitting }: { isSubmitting: boolean }) => (
+							 {({ isSubmitting, status }: { isSubmitting: boolean; status?: { error?: string } }) => (
 								<Form>
 									<div className='mt-3'>
 										<label htmlFor="email" className='d-block'>Email</label>
@@ -56,7 +79,7 @@ export default function Login() {
 										/>
 										<ErrorMessage name="email" component="div" className="error" />
 									</div>
-
+							
 									<div className='mt-3'>
 										<label htmlFor="password" className='d-block'>Senha</label>
 										<Field
@@ -64,13 +87,15 @@ export default function Login() {
 											id="password"
 											name="password"
 											placeholder="Insira sua senha"
+											autoComplete="on"
 										/>
 										<ErrorMessage name="password" component="div" className="error" />
 									</div>
-
+							
 									<button type="submit" disabled={isSubmitting} className='mt-3'>
 										Entrar
 									</button>
+									{status?.error && <div className='error mt-3'>{status.error}</div>}
 								</Form>
 							)}
 						</Formik>

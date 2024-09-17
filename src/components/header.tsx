@@ -1,9 +1,6 @@
-import iconSair from "@/../../public/assets/img/icon-sair.svg";
 import Link from 'next/link'
-import Image from 'next/image';
-
 import styles from "@/styles/modules/header.module.css";
-
+import Logout from './logout';
 
 export default async function Header() {
 
@@ -14,10 +11,7 @@ export default async function Header() {
                     <h5 className='color-primary m-0'><strong>Pós Tech</strong></h5>
                 </Link>
 
-                <div className="cursor-pointer">
-                    <Image src={iconSair} alt='Sair' className="me-2" />
-                    <span className="color-primary">Sair</span>
-                </div>
+                <Logout />
             </div>
         </div>
     )
