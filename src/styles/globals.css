@@ -28,7 +28,6 @@ section {
   cursor: none;
 }
 
-
 .color-primary {
   color: var(--primary-color);
 }
@@ -47,4 +46,11 @@ section {
 
 .error{
   color: var(--primary-color);
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
