@@ -1,5 +1,6 @@
-import HelloWord from "@/components/helloWorld";
 
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Post({ params }: any) {
 	
 	return (

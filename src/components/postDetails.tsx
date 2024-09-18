@@ -1,38 +1,61 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '@/styles/globals.css'
 import styles from '@/styles/modules/postDetails.module.css';
 import Longtext from '@/components/longText';
+import { getPostById } from '@/app/services/posts';
+import IPost from "@/interface/IPost";
 
+const PostDetails = ({ idPost }: { idPost: number }) => {
+  const [post, setPostt] = useState<IPost | null>(null);
+  const [loading, setLoading] = useState(true);
 
-const description = `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet sapien vitae sapien varius tempus. 
-Integer vehicula mauris nisi, in faucibus felis volutpat vel. Ut fringilla urna mi, ut convallis turpis 
-elementum sed. Curabitur volutpat malesuada augue at volutpat. Aliquam sodales tempor libero, ut convallis 
-arcu laoreet vel. Vestibulum eget nisl quam. Duis eu felis magna. Aenean dapibus, purus a porttitor tincidunt, 
-sem eros dapibus nisl, sed convallis justo erat a dui. Nulla id facilisis velit. Suspendisse posuere purus et 
-lectus lacinia tincidunt. Integer tincidunt ac tortor nec viverra. Sed scelerisque mi nunc, sit amet malesuada 
-ligula malesuada in. Sed viverra convallis mi in eleifend.
+  console.log('PostDetails - idPost: ' + idPost);
 
-Mauris consectetur ligula nec turpis scelerisque, ac dictum sapien efficitur. Etiam malesuada vestibulum metus, 
-et rutrum lorem condimentum sit amet. Curabitur tincidunt tincidunt justo in tincidunt. Fusce vestibulum et 
-ligula in condimentum. Vestibulum ut dolor augue. Suspendisse auctor nulla nec fermentum ullamcorper. Integer 
-posuere dapibus velit, et fringilla turpis ullamcorper sit amet. Fusce vehicula ligula at est vehicula, sit amet 
-aliquam lacus cursus. Phasellus euismod libero non pharetra vulputate.
-`;
+  useEffect(() => {
+    getPostById(idPost)
+      .then((post) => {
+        setPostt(post);
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar o post:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [idPost]);
 
-const PostDetails = () => {
-  return (
-    <div className='container'> 
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  console.log('post: ' + post)
+
+  if (!post) {
+    return (
+      <div className='container'>
         <div className={styles.placeholderimage}></div>
-        <h2 className={styles.postDetailstitle}>Titulo do Post</h2>
-        <p className={styles.postDetailsmeta}> 
-            Postado dia 01/09/2024 - Última atualização: 14/09/2024
-        </p>
-        <div className={styles.postDetailsbody}>
-            <Longtext text={description} />       
-        </div>
+        <h2 className={styles.postDetailstitle}>Post não encontrado</h2>
+      </div>
+    );
+  }
+
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('pt-BR', options);
+  };
+
+  return (
+    <div className='container'>
+      <div className={styles.placeholderimage}></div>
+      <h2 className={styles.postDetailstitle}>{post.titulo}</h2>
+      <p className={styles.postDetailsmeta}>
+        Postado dia {formatDate(post.datapostagem)} - Última atualização: {formatDate(post.dataatualizacao)}
+      </p>
+      <div className={styles.postDetailsbody}>
+        <Longtext text={post.descricao} />
+      </div>
     </div>
   );
 };

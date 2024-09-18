@@ -1,0 +1,45 @@
+.post_grid {
+  display: grid;
+  grid-template-columns: 0.4fr 2fr 3fr 1fr 1fr 0.6fr;
+  gap: 10px;
+  padding: 20px;
+  color: #fff;
+}
+
+.post_grid_header {
+  display: contents;
+  font-weight: bold;
+  color: #ed145b;
+}
+
+.post_grid_row {
+  display: contents;
+  position: relative;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.post-grid-row::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #e91e63;
+}
+
+.post_grid_header span, 
+.post_grid_row span {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e91e63;
+}
+
+.edit_button, .link_button {
+  cursor: pointer;
+}

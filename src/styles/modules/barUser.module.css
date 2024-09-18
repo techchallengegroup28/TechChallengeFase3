@@ -1,0 +1,41 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 40px;
+    font-weight: 400;
+    color: #ED145B;
+}
+
+.input {
+    width: 17rem;
+    padding: 5px;
+    background-color: #282828;
+    border-radius: 15px;
+    color: #ED145B;
+    margin-right: 10px;
+    border: none;
+}
+
+.align_search {
+    display: flex;
+    align-items: center;
+}
+
+.input::placeholder {
+    font-family: Roboto Condensed;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.75px;
+    text-align: center;
+    color: #71787B;
+}
+
+.img {
+    cursor: pointer;
+}

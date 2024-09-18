@@ -1,17 +1,25 @@
-import HelloWord from "@/components/helloWorld";
+"use client"
+import ListPostUser from "@/components/ListPostUser";
+import Bar from "@/components/bar";
+import React, { useState } from 'react';
 
-export default function Home() {
-	return (
-		<>
-			<h1>Ola mundo</h1>
-			<h2>Olamundo</h2>
-			<h3>Olamundo</h3>
-			<h4>Olamundo</h4>
-			<h5>Olamundo</h5>
-			<h6>Olamundo</h6>
-			<p>Olamundo</p>
-			<p><small>Olamundo</small></p>
-			<HelloWord />
-		</>
-	);
-}
+const ParentComponent = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  return (
+	<div className="container">
+      <main>
+    <div>
+      <Bar onSearch={handleSearch} />
+      <ListPostUser searchQuery={searchQuery} />
+    </div>
+	  </main>
+	</div>
+  );
+};
+
+export default ParentComponent;

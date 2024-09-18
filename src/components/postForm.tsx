@@ -58,8 +58,10 @@ const PostForm: React.FC = () => {
             }; 
             
             console.log(payload);
+            
+            console.log('URL: ' + process.env.NEXT_PUBLIC_BASE_URL + '/api/posts');
 
-            const response = await fetch('http://localhost:3000/api/posts', {
+            const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/posts', {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -69,6 +71,8 @@ const PostForm: React.FC = () => {
                 body: JSON.stringify(payload),
      
             });
+
+            console.log(response);
 
             if (!response.ok) {
                 throw new Error("Erro ao enviar os dados");
