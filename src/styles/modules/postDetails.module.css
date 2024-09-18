@@ -1,0 +1,31 @@
+/*.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+*/
+  .postDetailstitle {
+    color: #ff004f;
+    font-size: 36px;
+  }
+  
+  .postDetailsmeta {
+    font-size: 14px;
+    color: #cccccc;
+    margin-bottom: 10px;
+  }
+  
+  .postDetailsbody {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .placeholderimage {
+    background-color:#D9D9D9;    
+    width: 100%;    
+    margin-top: 10px;   
+    height: 200px;
+    margin-bottom: 20px;
+    border-radius: 16px;
+  }

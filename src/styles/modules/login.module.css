@@ -1,0 +1,81 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #1a1a1a;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  }
+  
+  .title {
+    font-size: 2rem;
+    text-align: center;
+    color: #e50000;
+    margin-bottom: 1.5rem;
+  }
+  
+  .label {
+    font-size: 0.875rem;
+    color: #d1d1d1;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    background-color: #4a4a4a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #ddd;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #e50000;
+    box-shadow: 0 0 5px rgba(229, 0, 0, 0.5);
+  }
+  
+  .errorMessage {
+    color: #ff4d4d;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
+  .buttonWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+  .button {
+    width: 210px;   
+    height: 40px; 
+    text-align: center;
+    margin-top: 20px;
+    border: 2px solid #ff004f;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #ff004f;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .button:hover {
+    background-color: #ff004f;
+    color: white;
+  }  
+  
+  .errorText {
+    text-align: center;
+    color: #ff4d4d;
+    margin-bottom: 1rem;
+  }
+  
