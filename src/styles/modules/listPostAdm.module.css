@@ -1,8 +1,6 @@
 .post_grid {
   display: grid;
   grid-template-columns: 0.4fr 2fr 3fr 1fr 1fr 0.6fr;
-  gap: 10px;
-  padding: 20px;
   color: #fff;
 }
 

@@ -52,11 +52,11 @@ const PostDetails = ({ idPost }: { idPost: number }) => {
 
   return (
     <div className='container'>
-      {/* <div className={styles.placeholderimage}> */}
+      <div className={styles.photo}>
       {post.imagem ? (
-          <Image src={imgPost} alt="Post Image"  width={300} height={300} className={styles.photo} />
+          <Image src={imgPost} alt="Post Image"  fill />
         ) : <div className={styles.placeholderimage}></div>}
-      {/* </div> */}
+      </div>
       <h2 className={styles.postDetailstitle}>{post.titulo}</h2>
       <p className={styles.postDetailsmeta}>
         Postado dia {formatDate(post.datapostagem)} - Última atualização: {formatDate(post.dataatualizacao)}

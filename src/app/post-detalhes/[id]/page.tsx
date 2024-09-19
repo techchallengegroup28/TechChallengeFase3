@@ -1,14 +1,13 @@
-'use client';
 import PostDetails from "@/components/postDetails";
-import { useParams } from 'next/navigation';
 
-export default function PostDetalhes() {
-  const params = useParams();
-  const idPost = params.id;
-  
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function PostDetalhes({params}: {params: any}) {
+
+  console.log('hh: ' + params.id);
+
     return (
        <>
-         <PostDetails idPost={Number(idPost)}/>
+         <PostDetails idPost={params.id}/>
        </>
     );
 }

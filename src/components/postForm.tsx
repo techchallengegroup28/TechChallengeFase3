@@ -64,8 +64,8 @@ const PostForm: React.FC = () => {
             const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/posts', {
                 method: "POST",
                 headers: {
-                    'Accept': 'application/json',
-                    'conteudo-Type': 'application/json',
+                    // 'Accept': 'application/json',
+                    'content-Type': 'application/json',
                     'Authorization': `Bearer ${cookie}`,            
                 },
                 body: JSON.stringify(payload),
