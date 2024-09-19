@@ -6,6 +6,7 @@ import styles from '@/styles/modules/postDetails.module.css';
 import Longtext from '@/components/longText';
 import { getPostById } from '@/app/services/posts';
 import IPost from "@/interface/IPost";
+import Image from 'next/image';
 
 const PostDetails = ({ idPost }: { idPost: number }) => {
   const [post, setPostt] = useState<IPost | null>(null);
@@ -46,9 +47,16 @@ const PostDetails = ({ idPost }: { idPost: number }) => {
     return new Date(dateString).toLocaleDateString('pt-BR', options);
   };
 
+  let imgPost = 'data:image/jpg;base64'+ post.imagem;
+  imgPost = imgPost.replace('dataimage/jpegbase64', 'data:image/jpg;base64,');
+
   return (
     <div className='container'>
-      <div className={styles.placeholderimage}></div>
+      {/* <div className={styles.placeholderimage}> */}
+      {post.imagem ? (
+          <Image src={imgPost} alt="Post Image"  width={300} height={300} className={styles.photo} />
+        ) : <div className={styles.placeholderimage}></div>}
+      {/* </div> */}
       <h2 className={styles.postDetailstitle}>{post.titulo}</h2>
       <p className={styles.postDetailsmeta}>
         Postado dia {formatDate(post.datapostagem)} - Última atualização: {formatDate(post.dataatualizacao)}

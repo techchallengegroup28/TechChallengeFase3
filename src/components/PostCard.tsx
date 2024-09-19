@@ -1,15 +1,13 @@
 import React from 'react';
-import IPost from '@/interface/IPost';
-// import Link from 'next/link';
+import IPost from '@/interface/IPost'
 import styles from '../styles/modules/listPostUser.module.css';
 import { useRouter } from 'next/navigation';
 
 const PostCard = ({ post }: { post: IPost }) => {
-  // console.log('PostCard - post.id: ' + post.id);
   const router = useRouter();
 
   const redirecionar = () => {
-    router.push('/post-detalhes/' + post);
+    router.push('/post-detalhes/' + post.id);
   }
   
   return (

@@ -47,7 +47,6 @@ export default function ListPostAdmin() {
 
   return (
     <div className={styles.post_grid}>
-      {/* Cabeçalho do Grid */}
       <div className={styles.post_grid_header}>
         <span>Id</span>
         <span>Título</span>
@@ -56,7 +55,6 @@ export default function ListPostAdmin() {
         <span>Data Atualização</span>
         <span>Ações</span>
       </div>
-      {/* Linhas do Grid */}
       {posts?.map((post) => (
         <div className={styles.post_grid_row} key={post.id}>
           <span>{post.id}</span>

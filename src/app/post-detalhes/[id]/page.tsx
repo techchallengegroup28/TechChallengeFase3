@@ -1,10 +1,14 @@
+'use client';
 import PostDetails from "@/components/postDetails";
+import { useParams } from 'next/navigation';
 
-export default function PostDetalhes({ idPost }: { idPost: number }) {
-  // console.log('Page - idPost: ' + idPost);
+export default function PostDetalhes() {
+  const params = useParams();
+  const idPost = params.id;
+  
     return (
        <>
-         <PostDetails idPost={idPost}/>
+         <PostDetails idPost={Number(idPost)}/>
        </>
     );
 }

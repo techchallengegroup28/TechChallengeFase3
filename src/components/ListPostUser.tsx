@@ -8,15 +8,17 @@ const ListPostUser = ({ searchQuery }: { searchQuery: string }) => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<IPost[]>([]);
 
-  useEffect(() => {
-    getAllPosts('').then((data: React.SetStateAction<IPost[]> | null) => {
+   useEffect(() => {
+    getAllPosts('').then((data: IPost[] | null) => {
       if (data) {
         setPosts(data);
       } else {
         setPosts([]);
       }
-    })
+    });
+  }, []);
 
+  useEffect(() => {
     if (searchQuery !== '') {
       setFilteredPosts(posts.filter(post =>
         post.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
