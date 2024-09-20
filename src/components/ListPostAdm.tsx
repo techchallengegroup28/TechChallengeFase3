@@ -1,24 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { getAllPosts } from '@/app/services/posts';
+import { getAllPosts, deletePost } from '@/services/posts';
 import IPost from "@/interface/IPost";
 import iconEditar from "@/../../public/assets/img/icon-editar.svg";
-import iconSair from "@/../../public/assets/img/icon-sair.svg";
+import iconExcluir from "@/../../public/assets/img/icon-sair.svg";
 
 import Image from 'next/image';
 import styles from '@/styles/modules/listPostAdm.module.css';
 import Link from 'next/link';
 import Cookie from "js-cookie";
-
-const formatDate = (dateString: string) => {
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  return new Date(dateString).toLocaleDateString('pt-BR', options);
-};
+import { formatDate } from '@/utils/appUtils';
+import { sortListPostsById } from '@/utils/appUtils';
 
 export default function ListPostAdmin() {
   const [posts, setPosts] = useState<IPost[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [alertShown, setAlertShown] = useState(false);
+
+  const delPost = async (id: number) => {
+    const cookie = Cookie.get('accessToken');
+
+    const wasDelet = await deletePost(id, cookie);
+  
+    if (wasDelet && posts !== null) {
+      setPosts(posts.filter(post => post.id !== id));
+    } else {
+      alert('Erro ao deletar post');
+    }
+  };
 
   useEffect(() => {
     const cookie = Cookie.get('accessToken');
@@ -29,9 +38,10 @@ export default function ListPostAdmin() {
           setAlertShown(true);
           alert('posts/admin retornou 403');
         }
-        setError('Sem autorização para buscar os posts, error 403');
+        setError('Token expirado, favor realizar novo login - Error 403');
       } else {
-        setPosts(data);
+        setPosts(sortListPostsById(data as IPost[]));
+        
       }
       setLoading(false);
     });
@@ -66,9 +76,9 @@ export default function ListPostAdmin() {
             <Link href={`/admin/post-editar/${post.id}`}>
               <Image src={iconEditar} alt='Editar' className="me-1" />
             </Link>
-            <Link href={`/admin/post-editar/${post.id}`}>
-              <Image src={iconSair} alt='Excluir' />
-            </Link>
+            <div onClick={() => delPost(post.id)}>
+              <Image src={iconExcluir} alt='Excluir' />
+            </div>
           </span>
         </div>
       ))}

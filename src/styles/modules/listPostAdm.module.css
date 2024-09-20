@@ -18,6 +18,7 @@
 .actions {
   display: flex;
   gap: 0.5rem;
+  cursor: pointer;
 }
 
 .post-grid-row::after {
@@ -36,8 +37,4 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid #e91e63;
-}
-
-.edit_button, .link_button {
-  cursor: pointer;
 }

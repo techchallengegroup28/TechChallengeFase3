@@ -1,18 +1,19 @@
 "use client";
-
 import React, { useEffect, useState } from 'react';
 import '@/styles/globals.css'
 import styles from '@/styles/modules/postDetails.module.css';
 import Longtext from '@/components/longText';
-import { getPostById } from '@/app/services/posts';
+import { getPostById } from '@/services/posts';
 import IPost from "@/interface/IPost";
 import Image from 'next/image';
+import { formatDate, processingImgBase64 } from '@/utils/appUtils';
 
 const PostDetails = ({ idPost }: { idPost: number }) => {
   const [post, setPostt] = useState<IPost | null>(null);
   const [loading, setLoading] = useState(true);
+  let imgPost = '';
 
-  console.log('PostDetails - idPost: ' + idPost);
+  // console.log('PostDetails - idPost: ' + idPost);
 
   useEffect(() => {
     getPostById(idPost)
@@ -31,7 +32,7 @@ const PostDetails = ({ idPost }: { idPost: number }) => {
     return <div>Carregando...</div>;
   }
 
-  console.log('post: ' + post)
+  // console.log('post: ' + post)
 
   if (!post) {
     return (
@@ -42,19 +43,15 @@ const PostDetails = ({ idPost }: { idPost: number }) => {
     );
   }
 
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return new Date(dateString).toLocaleDateString('pt-BR', options);
-  };
-
-  let imgPost = 'data:image/jpg;base64'+ post.imagem;
-  imgPost = imgPost.replace('dataimage/jpegbase64', 'data:image/jpg;base64,');
-
+if (post.imagem){
+  imgPost = processingImgBase64(post.imagem);
+}
+  
   return (
     <div className='container'>
       <div className={styles.photo}>
-      {post.imagem ? (
-          <Image src={imgPost} alt="Post Image"  fill />
+        {post.imagem ? (
+          <Image src={imgPost} alt="Post Image" fill />
         ) : <div className={styles.placeholderimage}></div>}
       </div>
       <h2 className={styles.postDetailstitle}>{post.titulo}</h2>

@@ -1,12 +1,12 @@
 "use client";
-
 import Cookie from "js-cookie";
-import React, { useState }  from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import '@/styles/globals.css';
 import styles from '@/styles/modules/postForm.module.css';
 import { useRouter } from 'next/navigation';
+import { getPostById, updatePost, createPost } from "@/services/posts";
 
 interface PostFormValues {
     titulo: string;
@@ -15,19 +15,69 @@ interface PostFormValues {
     imagem: File | null;
 }
 
-const PostForm: React.FC = () => {
+interface PostFormProps {
+    idPost?: string;
+}
+
+const getPost = async (id: string) => {
+    const post = await getPostById(Number(id));
+    return post;
+}
+
+const dataURLtoFile = (dataurl: string, filename: string): File => {
+    try{
+    dataurl = dataurl.replace('dataimage/jpegbase64', 'data:image/jpeg;base64,').replace('dataimage/jpgbase64', 'data:image/jpg;base64,').replace('dataimage/webpbase64', 'data:image/webp;base64,');
+    const arr = dataurl.split(',');
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    const mime = mimeMatch ? mimeMatch[1] : '';
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+} catch (error) {
+    console.error(error);
+    return new File([], '');
+  }
+}
+
+const PostForm: React.FC<PostFormProps> = ({ idPost }) => {
     const router = useRouter();
     const cookie = Cookie.get('accessToken')
+    
+    // console.log('PostForm: ' + idPost);
 
     const [serverError, setServerError] = useState<string | null>(null);
     const [serverSuccess, setServerSuccess] = useState<string | null>(null);
-
-    const initialValues: PostFormValues = {
+    const [initialValues, setInitialValues] = useState<PostFormValues>({
         titulo: '',
         descricao: '',
         conteudo: '',
         imagem: null
-    }
+    });
+
+    useEffect(() => {
+        if (idPost) {
+            getPost(idPost).then(post => {
+                // console.log('PostForm - post:titulo ' + post?.titulo);
+                // console.log('PostForm - post:descricao ' + post?.descricao);
+                // console.log('PostForm - post:conteudo ' + post?.conteudo);
+                // console.log('PostForm - post:imagem ' + post?.imagem);
+                if (post) {
+                    setInitialValues({
+                        titulo: post.titulo,
+                        descricao: post.descricao,
+                        conteudo: post.conteudo,
+                        imagem: post.imagem ? dataURLtoFile(post.imagem, 'imagem.png') : null
+                    });
+                }
+            }).catch(error => {
+                setServerError('Erro ao carregar o post' + error);
+            });
+        }
+    }, [idPost]);
 
     const validationSchema = Yup.object({  
         titulo: Yup.string().required('O título é obrigatório'),
@@ -48,7 +98,7 @@ const PostForm: React.FC = () => {
     const handleSubmit = async (values: PostFormValues) => {
 
         try {
-             const base64Image = values.imagem ? await convertImageToBase64(values.imagem) : null; 
+            const base64Image = values.imagem ? await convertImageToBase64(values.imagem) : null; 
 
             const payload = {
                 titulo: values.titulo,
@@ -59,24 +109,16 @@ const PostForm: React.FC = () => {
             
             console.log(payload);
             
-            console.log('URL: ' + process.env.NEXT_PUBLIC_BASE_URL + '/api/posts');
+            let response: Promise<boolean>;
+            if (idPost){
+                response = updatePost(payload, idPost, cookie);
+            }else {
+                response = createPost(payload, cookie);
+            }
 
-            const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/posts', {
-                method: "POST",
-                headers: {
-                    // 'Accept': 'application/json',
-                    'content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookie}`,            
-                },
-                body: JSON.stringify(payload),
-     
-            });
-
-            console.log(response);
-
-            if (!response.ok) {
-                throw new Error("Erro ao enviar os dados");
-            }           
+            if (!response) {
+                throw new Error("Erro ao enviar os dados.");
+            }
             
             setServerSuccess("Post enviado com sucesso!");
 
@@ -93,6 +135,7 @@ const PostForm: React.FC = () => {
         <div className="container">
             <h1 className={styles.title}>Criação/edição de post</h1>
             <Formik
+                enableReinitialize
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
