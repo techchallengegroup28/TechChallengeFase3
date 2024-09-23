@@ -57,12 +57,6 @@ export default function Login() {
 		<div className={styles.container}>
 		  	<div className={styles.card}>
 				<h2 className={styles.title}>Login</h2>
-				<pre>
-					admin@email.com
-				</pre>
-				<pre>
-					123456
-				</pre>
 				<Formik
 			  		initialValues={{ email: "", password: "" }}
 			  		validationSchema={validationSchema}

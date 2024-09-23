@@ -2,8 +2,10 @@ import IPost from "@/interface/IPost";
 
 export function formatDate(dateString: string): string {
     try {
-        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        return new Date(dateString).toLocaleDateString('pt-BR', options);
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit',  timeZone: 'America/Sao_Paulo' };
+        const date = new Date(dateString);
+        date.setHours(date.getHours() + 3);
+        return date.toLocaleDateString('pt-BR', options);
 
     } catch (error) {
         console.error('Erro ao formatar data: ', error);
