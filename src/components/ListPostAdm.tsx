@@ -60,18 +60,18 @@ export default function ListPostAdmin() {
       <div className={styles.post_grid_header}>
         <span>Id</span>
         <span>Título</span>
-        <span>Descrição</span>
-        <span>Data Postada</span>
-        <span>Data Atualização</span>
+        <span className={styles.desktop}>Descrição</span>
+        <span className={styles.desktop}>Data Postada</span>
+        <span className={styles.desktop}>Data Atualização</span>
         <span>Ações</span>
       </div>
       {posts?.map((post) => (
         <div className={styles.post_grid_row} key={post.id}>
           <span>{post.id}</span>
           <span>{post.titulo}</span>
-          <span>{post.descricao}</span>
-          <span>{formatDate(post.datapostagem)}</span>
-          <span>{formatDate(post.dataatualizacao)}</span>
+          <span className={styles.desktop}>{post.descricao}</span>
+          <span className={styles.desktop}>{formatDate(post.datapostagem)}</span>
+          <span className={styles.desktop}>{formatDate(post.dataatualizacao)}</span>
           <span className={styles.actions}>
             <Link href={`/admin/post-editar/${post.id}`}>
               <Image src={iconEditar} alt='Editar' className="me-1" />

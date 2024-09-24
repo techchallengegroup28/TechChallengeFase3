@@ -1,5 +1,5 @@
   .title {
-    color: #ff004f;
+    color: #ED145B;
     text-align: left;
     margin-bottom: 20px;
   }
@@ -32,21 +32,21 @@
     width: 210px;   
     height: 40px; 
     margin-top: 20px;
-    border: 2px solid #ff004f;
+    border: 2px solid #ED145B;
     border-radius: 5px;
     background-color: transparent;
-    color: #ff004f;
+    color: #ED145B;
     cursor: pointer;
     font-size: 16px;
   }
   
   .button:hover {
-    background-color: #ff004f;
+    background-color: #ED145B;
     color: white;
   }
   
   .errormessage {
-    color: #ff004f;
+    color: #ED145B;
     margin-top: 2px;  
     margin-bottom: 10px;
     font-size: 14px;

@@ -18,7 +18,7 @@
   .title {
     font-size: 2rem;
     text-align: center;
-    color: #e50000;
+    color: #ED145B;
     margin-bottom: 1.5rem;
   }
   
@@ -60,16 +60,16 @@
     height: 40px; 
     text-align: center;
     margin-top: 20px;
-    border: 2px solid #ff004f;
+    border: 2px solid #ED145B;
     border-radius: 5px;
     background-color: transparent;
-    color: #ff004f;
+    color: #ED145B;
     cursor: pointer;
     font-size: 16px;
   }
   
   .button:hover {
-    background-color: #ff004f;
+    background-color: #ED145B;
     color: white;
   }  
   

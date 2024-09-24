@@ -29,24 +29,17 @@ const PostDetails = ({ idPost }: { idPost: number }) => {
   }, [idPost]);
 
   if (loading) {
-    return <div>Carregando...</div>;
-  }
-
-  // console.log('post: ' + post)
-
-  if (!post) {
     return (
       <div className='container'>
-        <div className={styles.placeholderimage}></div>
-        <h2 className={styles.postDetailstitle}>Post não encontrado</h2>
+        <h1 className={styles.postDetailstitle}>Carregado...</h1>
       </div>
     );
   }
 
-if (post.imagem){
-  imgPost = processingImgBase64(post.imagem);
-}
-  
+  if (post.imagem) {
+    imgPost = processingImgBase64(post.imagem);
+  }
+
   return (
     <div className='container'>
       <div className={styles.photo}>
