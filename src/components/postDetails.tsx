@@ -36,24 +36,28 @@ const PostDetails = ({ idPost }: { idPost: number }) => {
     );
   }
 
-  if (post.imagem) {
+  if (post && post.imagem) {
     imgPost = processingImgBase64(post.imagem);
   }
 
   return (
     <div className='container'>
-      <div className={styles.photo}>
-        {post.imagem ? (
-          <Image src={imgPost} alt="Post Image" fill />
-        ) : <div className={styles.placeholderimage}></div>}
-      </div>
-      <h2 className={styles.postDetailstitle}>{post.titulo}</h2>
-      <p className={styles.postDetailsmeta}>
-        Postado dia {formatDate(post.datapostagem)} - Última atualização: {formatDate(post.dataatualizacao)}
-      </p>
-      <div className={styles.postDetailsbody}>
-        <Longtext text={post.descricao} />
-      </div>
+      {post &&
+        <>
+          <div className={styles.photo}>
+            {post.imagem ? (
+              <Image src={imgPost} alt="Post Image" fill />
+            ) : <div className={styles.placeholderimage}></div>}
+          </div>
+          <h2 className={styles.postDetailstitle}>{post.titulo}</h2>
+          <p className={styles.postDetailsmeta}>
+            Postado dia {formatDate(post.datapostagem)} - Última atualização: {formatDate(post.dataatualizacao)}
+          </p>
+          <div className={styles.postDetailsbody}>
+            <Longtext text={post.descricao} />
+          </div>
+        </>
+      }
     </div>
   );
 };
